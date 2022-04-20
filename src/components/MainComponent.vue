@@ -1,32 +1,36 @@
 <template>
     <main>
-        <h2>Movies</h2>
         <div>
-            <CardItem 
-            :baseURL="'https://image.tmdb.org/t/p/'"
-            :sendflag="flag"
-            :key="index" 
-            v-for="(item,index) in sentMoviesList"
-            :title="item.title"
-            :imageUrl="item.poster_path"
-            :span="item.original_title"
-            :span2="item.original_language"
-            :score="item.vote_average"
-            />
-        </div>
-        <h2>series</h2>
-        <div>
-            <CardItem 
-            :baseURL="'https://image.tmdb.org/t/p/'"
-            :sendflag="flag"
-            :key="index" 
-            v-for="(item,index) in sentSeriesList"
-            :title="item.name"
-            :imageUrl="item.poster_path"
-            :span="item.original_name"
-            :span2="item.original_language"
-            :score="item.vote_average"
-            />
+            <h2>Movies</h2>
+            <div>
+                <CardItem 
+                :baseURL="'https://image.tmdb.org/t/p/'"
+                :sendflag="flag"
+                :key="index" 
+                v-for="(item,index) in sentMoviesList"
+                :title="item.title"
+                :imageUrl="item.poster_path"
+                :span="item.original_title"
+                :span2="item.original_language"
+                :score="item.vote_average"
+                :paragraph="item.overview"
+                />
+            </div>
+            <h2>Series</h2>
+            <div>
+                <CardItem 
+                :baseURL="'https://image.tmdb.org/t/p/'"
+                :sendflag="flag"
+                :key="index" 
+                v-for="(item,index) in sentSeriesList"
+                :title="item.name"
+                :imageUrl="item.poster_path"
+                :span="item.original_name"
+                :span2="item.original_language"
+                :score="item.vote_average"
+                :paragraph="item.overview"
+                />
+            </div>
         </div>
     </main>
 </template>
@@ -52,16 +56,30 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+@import '~/src/styles/variables';
+
     main{
-        width: 100%;
+        color: $font-color-secondary;
+        padding: 30px 0 ;
+        //height: calc(100vh - 80px);
+        background-color: $bg-main;
         & > div{
             max-width: 1200px;
             margin: auto;
-            display: flex;
-            flex-wrap: wrap;
-            border: 1px solid black;
-            *{
-                width: calc(100% / 5 - 2rem);
+            & > h2{
+                padding: 10px;
+                border-bottom: 1px solid #000;
+            }
+            & > div{
+                justify-content: center;
+                align-items: center;
+                display: flex;
+                flex-wrap: wrap;
+                *{
+                    width: calc(100% / 5 - 2rem);
+
+                }
             }
         }
     }

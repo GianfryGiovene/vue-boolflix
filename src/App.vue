@@ -7,7 +7,6 @@
 
 <script>
 import axios from 'axios';
-
 import HeaderComponent from '@/components/HeaderComponent.vue';
 import MainComponent from '@/components/MainComponent.vue'
 
@@ -68,6 +67,7 @@ export default {
 
 <style lang="scss">
 @import '~/src/styles/general';
+
 #app {
   width: 100%;
 }

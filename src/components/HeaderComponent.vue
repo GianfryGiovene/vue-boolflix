@@ -3,8 +3,7 @@
         <div>
             <h1>BoolFlix</h1>
             <div>
-                <label for="search">Inserire parola chiave per la ricerca</label>
-                <input type="text" @keyup.enter="sendInputSaved" v-model="inputSaved" name="" id="search">
+                <input type="text" @keyup="sendInputSaved" v-model="inputSaved" name="" placeholder="Cosa vuoi guardare?">
                 <button @click="sendInputSaved">Cerca</button>
             </div>
         </div>
@@ -28,15 +27,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~/src/styles/variables';
     header{
-        border: 1px solid red;
-        background-color: grey;
+        background-color: $bg-header;
+        min-height: 80px;
+        padding: 10px 0;
         & > div{
             max-width: 1200px;
             margin: auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding:  10px 0;
+            h1{
+                color: $font-color-primary;
+            }
+            div{
+                input{
+                    margin-right: 20px;
+                    display: inline-block;
+                    height: 30px;
+                    border-radius: 15px;
+                    border: none;
+                    padding: 0 10px;
+                }
+                button{
+                    padding: 5px 20px;
+                    border-radius: 15px;
+                    border: 2px solid $font-color-primary;
+                    background-color: $bg-header;
+                    color: $font-color-primary;
+                    cursor: pointer;
+                }
+            }
         }
     }
 </style>
