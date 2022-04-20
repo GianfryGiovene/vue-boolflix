@@ -3,6 +3,7 @@
         <h2>Movies</h2>
         <div>
             <CardItem 
+            :baseURL="'https://image.tmdb.org/t/p/'"
             :sendflag="flag"
             :key="index" 
             v-for="(item,index) in sentMoviesList"
@@ -16,6 +17,7 @@
         <h2>series</h2>
         <div>
             <CardItem 
+            :baseURL="'https://image.tmdb.org/t/p/'"
             :sendflag="flag"
             :key="index" 
             v-for="(item,index) in sentSeriesList"
@@ -39,9 +41,7 @@ export default {
     },
     data(){
         return{
-            
-           flag:['af','ax','al','dz','as','ad','ao','ai','aq','ag','ar','am','aw','au','at','az','bs','bh','bd','bb','by','be','bz','bj','bm','bt','bo','bq','ba','bw','bv','br','vg','io','bn','bg','bf','bi','kh','cm','ca','ky','cl','cn','cz','dk','fi','fr','de','in','it','jp','pl','pt','us','gb'],
-        
+            flag:['af','ax','al','dz','as','ad','ao','ai','aq','ag','ar','am','aw','au','at','az','bs','bh','bd','bb','by','be','bz','bj','bm','bt','bo','bq','ba','bw','bv','br','vg','io','bn','bg','bf','bi','kh','cm','ca','ky','cl','cn','cz','dk','fi','fr','de','in','it','jp','pl','pt','us','gb'],
         }
     },
     props:{
