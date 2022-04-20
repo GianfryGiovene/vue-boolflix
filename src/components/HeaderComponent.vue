@@ -21,10 +21,9 @@ export default {
     },
     methods:{
         sendInputSaved(){
-            console.log(this.inputSaved);
             this.$emit('getInputSaved', this.inputSaved);
         }
-    }
+    },
 }
 </script>
 
