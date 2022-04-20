@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <HeaderComponent @getInputSaved="getInput" />
-    <MainComponent  :sendList="movies"/>
+    <MainComponent  :sentMoviesList="movies" :sentSeriesList="series" />
   </div>
 </template>
 
@@ -21,36 +21,46 @@ export default {
       apiKey:'941815c5e331ca168a23b432e7f83189',
       apiUrl:'https://api.themoviedb.org/3/search/',
       inputReadyToSent:'',
-      movies:[]
+      searching:false,
+      movies:[],
+      series:[]
     }
   },
   methods:{
     getInput(inputSaved){
       this.inputReadyToSent = inputSaved;
-      console.log('ci siamo',this.inputReadyToSent,);
-      this.queryAPI('movie')
+      if(!this.searching && this.inputReadyToSent.length>0 ){
+        this.queryAPI('movie').then(response=>{
+            if(response.status===200){
+              this.searching = false;
+              this.movies = response.data.results;
+              console.log('questo movies',this.movies);
+            }
+          });
+        this.queryAPI('tv').then(response=>{
+            if(response.status===200){
+              this.searching = false;
+              this.series = response.data.results;
+              console.log('questo serie',this.series);
+            }
+          })
+          console.log('movie',this.movies,'series',this.series)
+      }
     },
 
-    queryAPI(kindOfApi){
-      
+    queryAPI(kindOfApi){  
+        this.searching = true;
         const params = {
           query: this.inputReadyToSent,
           api_key: this.apiKey,
           language: 'it-IT',
         }
-        axios.get(this.apiUrl + kindOfApi, {params}).then(response=>{
-          if(response.status===200)
-            this.movies = response.data.results
-            console.log('i film',this.movies);
-        }).catch(error=>console.log('error',error))
+        return axios.get(this.apiUrl + kindOfApi, {params}).catch(error=>{
+            this.searching = false;
+            console.log('error',error)
+            })
     }
   },
-  // mounted(){
-  //   this.queryAPI('movie')
-  // }
-
-  
-
 }
 </script>
 

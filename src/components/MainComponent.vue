@@ -1,11 +1,29 @@
 <template>
     <main>
+        <h2>Movies</h2>
         <div>
             <CardItem 
-            :key="{index}" 
-            v-for="(item,index) in sendList"
-            :text="item.title"
-            :imageUrl="item.poster_path "
+            :sendflag="flag"
+            :key="index" 
+            v-for="(item,index) in sentMoviesList"
+            :title="item.title"
+            :imageUrl="item.poster_path"
+            :span="item.original_title"
+            :span2="item.original_language"
+            :score="item.vote_average"
+            />
+        </div>
+        <h2>series</h2>
+        <div>
+            <CardItem 
+            :sendflag="flag"
+            :key="index" 
+            v-for="(item,index) in sentSeriesList"
+            :title="item.name"
+            :imageUrl="item.poster_path"
+            :span="item.original_name"
+            :span2="item.original_language"
+            :score="item.vote_average"
             />
         </div>
     </main>
@@ -19,9 +37,17 @@ export default {
     components:{
         CardItem,
     },
+    data(){
+        return{
+            
+           flag:['af','ax','al','dz','as','ad','ao','ai','aq','ag','ar','am','aw','au','at','az','bs','bh','bd','bb','by','be','bz','bj','bm','bt','bo','bq','ba','bw','bv','br','vg','io','bn','bg','bf','bi','kh','cm','ca','ky','cl','cn','cz','dk','fi','fr','de','in','it','jp','pl','pt','us','gb'],
+        
+        }
+    },
     props:{
-        sendList: Array
-    }
+        sentMoviesList: Array,
+        sentSeriesList:Array
+    },
 }
 </script>
 
@@ -35,7 +61,7 @@ export default {
             flex-wrap: wrap;
             border: 1px solid black;
             *{
-                width: calc(100% / 5 - 3rem);
+                width: calc(100% / 5 - 2rem);
             }
         }
     }
