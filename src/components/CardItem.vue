@@ -1,6 +1,6 @@
 <template>
     <div class="ggf-card">
-        <img v-if="imageUrl" :src="baseURL + 'w92' + imageUrl" alt="title">
+        <img v-if="imageUrl" :src="baseURL + 'w342' + imageUrl" alt="title">
         <span else>NO IMG</span>
         <h3>{{title}}</h3>
         <span>{{span}}</span>
@@ -10,9 +10,9 @@
             <span v-else>{{ span2 }}</span>
         </span>
         <div>
-            <!-- aggiungere fontawesome -->
-            <i :key="index" v-for="(item,index) in modifiedScore ">*</i>
+            <font-awesome-icon icon="fa-solid fa-star" :key="index" v-for="(item,index) in modifiedScore"></font-awesome-icon>
         </div>
+        
     </div>
 </template>
 
@@ -40,7 +40,8 @@ export default {
         score: Number,
     },
     created(){
-        this.modifiedScore = parseInt(this.score / 2)
+        // converto il numero float da 0 a 10 in un int da 0 a 5
+        this.modifiedScore = Math.ceil(this.score / 2)
     }
 }
 </script>
