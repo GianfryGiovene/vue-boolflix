@@ -7,6 +7,7 @@
 
 <script>
 import axios from 'axios';
+import {apikey} from './apikey';
 import HeaderComponent from '@/components/HeaderComponent.vue';
 import MainComponent from '@/components/MainComponent.vue'
 
@@ -19,36 +20,40 @@ export default {
   },
   data(){
     return{
-      apiKey:'941815c5e331ca168a23b432e7f83189',
+      apiKey: apikey,
       apiUrl:'https://api.themoviedb.org/3/search/',
       inputReadyToSent:'',
-      searching:false,
+      searching: false,
       movies:[],
-      series:[]
+      series:[],
     }
   },
   methods:{
+    // function that has $emit as parameter  received from the header
     getInput(inputSaved){
       this.inputReadyToSent = inputSaved;
-      if(!this.searching && this.inputReadyToSent.length>0 ){
-        this.queryAPI('movie').then(response=>{
-            if(response.status===200){
-              this.searching = false;
-              this.movies = response.data.results;
-              console.log('questo movies',this.movies);
-            }
-          });
-        this.queryAPI('tv').then(response=>{
-            if(response.status===200){
-              this.searching = false;
-              this.series = response.data.results;
-              console.log('questo serie',this.series);
-            }
-          })
-          console.log('movie',this.movies,'series',this.series)
+      if(!this.searching && this.inputReadyToSent.length > 0 ){
+        this.responseAPI();        
       }
     },
-
+    // responses Axios 
+    responseAPI(){
+      this.queryAPI('movie').then(response=>{
+        if(response.status === 200){
+          this.searching = false;
+          this.movies = response.data.results;
+          console.log('questo movies',this.movies);
+        }
+      });
+      this.queryAPI('tv').then(response=>{
+        if(response.status === 200){
+          this.searching = false;
+          this.series = response.data.results;
+          console.log('questo serie',response.data);
+        }
+      })
+    },
+    // return axios promise with custom api url
     queryAPI(kindOfApi){  
         this.searching = true;
         const params = {
@@ -60,7 +65,7 @@ export default {
             this.searching = false;
             console.log('error',error)
             })
-    }
+    },
   },
 }
 </script>

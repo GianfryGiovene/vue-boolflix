@@ -3,7 +3,7 @@
         <div>
             <h1>BoolFlix</h1>
             <div>
-                <input type="text" @keyup="sendInputSaved" v-model="inputSaved" name="" placeholder="Cosa vuoi guardare?">
+                <input type="text" @keyup.enter="sendInputSaved" v-model="inputSaved" name="" placeholder="Cosa vuoi guardare?">
                 <button @click="sendInputSaved">Cerca</button>
             </div>
         </div>
@@ -16,9 +16,11 @@ export default {
     data(){
         return{
             inputSaved:'',
+            
         }
     },
     methods:{
+        // input sent
         sendInputSaved(){
             this.$emit('getInputSaved', this.inputSaved);
         }

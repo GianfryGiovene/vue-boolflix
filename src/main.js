@@ -1,5 +1,5 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from 'vue';
+import App from './App.vue';
 
 // imports flags
 import CountryFlag from 'vue-country-flag'
@@ -15,13 +15,20 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 /* adds icons to the library */
-library.add(faStar)
+library.add(faStar);
 
 /* adds font awesome icon component */
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('font-awesome-icon', FontAwesomeIcon);
+
+// imports scroll bar
+import PerfectScrollbar from 'vue2-perfect-scrollbar';
+import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css';
+
+Vue.use(PerfectScrollbar);
 
 
-Vue.config.productionTip = false
+
+Vue.config.productionTip = false;
 
 
 

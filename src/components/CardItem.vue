@@ -1,10 +1,10 @@
 <template>
     <div   @mouseover="isOver" @mouseleave="isLeave" class="ggf-card">
-        <div v-if="!cardOver">
+        <div v-if="!cardOver" id="poster">
             <img v-if="imageUrl" :src="baseURL + 'w342' + imageUrl" alt="title">
-            <span v-else>NO IMG</span>
+            <img v-else src="@/assets/no-image-available.jpg" alt="">
         </div>
-        <div v-else>
+        <div v-else id="description">
             <div class="flex-wrap">
                 <h4>Titolo:</h4>
                 <span>{{title}}</span>
@@ -28,7 +28,9 @@
             </div>
             <div id="overview">
                 <h4>Overview </h4>
-                <p>{{ paragraph }}</p>
+                <perfect-scrollbar>
+                    <p>{{ paragraph }}</p>
+                </perfect-scrollbar>
             </div>    
         </div>       
     </div>
@@ -36,8 +38,6 @@
 
 <script>
 import CountryFlag from 'vue-country-flag';
-
-
 export default {
     name: 'CardItem',
     components:{
@@ -76,35 +76,57 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~/src/styles/variables';
     .ggf-card{
         margin: 1rem auto;
-        h4{
-            font-size: 0.8rem;
-        }
-        span{
-            font-size: 0.8rem;
-        }
-        & > div:first-child{
+        border: 2px solid $font-color-primary;
+        height: 300px;
+        width: 210px;
+        & > #poster{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
             img{
-                width: 100%;
+                padding:  0 2.5px;
+                height: 295px;
+                overflow-y: hidden;
             }
         }
         
-        & > div:last-child{
-            width: 100%;
+        & > #description{
+            padding: 5px;
+            display: flex;
+            width: 206px;
+            flex-direction: column;
             background-color: #000;
+            height: 100%;
+            overflow-y: hidden;
+            h4{
+            font-size: $small-font;
+            }
+            span{
+                font-size: $small-font;
+            }
             .flex-wrap{
                 display: flex;
-        }
-        & > div:nth-child(5){
-            
+            }
+            .star{
+                color: $yellow;
+            }
             #overview{
-                overflow-y: auto;
-                max-height: 80px;
+                .ps {
+                    height: 90px;
+                }
+                p{
+                    font-size: $small-font;
+                }
             }
         }
-        }
-    }
-    
-    
+    } 
 </style>
+
+
+
+
+
