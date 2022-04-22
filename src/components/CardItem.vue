@@ -37,7 +37,7 @@
             </div>
             <div id="genre">
                 <h4>Genre</h4>
-                <span :key="index" v-for="(genre,index) in genres">{{genre.name}}</span>
+                <span :key="index" v-for="(genre,index) in genres">{{genre.name + ' '}}</span>
                 
             </div>
             </perfect-scrollbar>
@@ -72,11 +72,13 @@ export default {
         span2: String,
         score: Number,
         id: Number,
-        whatKindOfShow: String
+        whatKindOfShow: String,
+        apiKey: String,
     },
     created(){
         // converts the float numbers from 0 to 10 in a int from 0 to 5
         this.modifiedScore = Math.ceil(this.score / 2);
+        this.requestForActorsAndGenres()
     },
     methods:{
         //card over controls 
@@ -86,19 +88,17 @@ export default {
         isLeave(){
             this.cardOver= false;
         },
-        axiosRequestForActors(){
-            axios.get(`https://api.themoviedb.org/3/${this.whatKindOfShow}/${this.id}?api_key=941815c5e331ca168a23b432e7f83189&append_to_response=credits`).then(response=>{
+
+        requestForActorsAndGenres(){
+            axios.get(`https://api.themoviedb.org/3/${this.whatKindOfShow}/${this.id}?api_key=${this.apiKey}&append_to_response=credits`)
+            .then(response=>{
                 console.log('lo vedo?',response.data.genres)
                 this.cast = response.data.credits.cast.slice(0,5);
                 this.genres = response.data.genres;
-                console.log('genreee',this.genres)
             }).catch(error=>console.log('error',error))
         },
         
     },
-    mounted(){
-        this.axiosRequestForActors()
-    }
     
     
 }
@@ -149,7 +149,7 @@ export default {
             }
             #overview{
                 .ps {
-                    height: 90px;
+                    max-height: 90px;
                 }
                 p{
                     font-size: $small-font;

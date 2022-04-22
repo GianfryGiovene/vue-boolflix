@@ -3,6 +3,7 @@
         <div>
             <h1>BoolFlix</h1>
             <div>
+                <SelectComponent @passChoice="sendChoise" :genreList="genreList"/>
                 <input type="text" @keyup.enter="sendInputSaved" v-model="inputSaved" name="" placeholder="Cosa vuoi guardare?">
                 <button @click="sendInputSaved">Cerca</button>
             </div>
@@ -11,6 +12,7 @@
 </template>
 
 <script>
+import SelectComponent from '@/components/SelectComponent.vue'
 export default {
     name:'HeaderComponent',
     data(){
@@ -19,12 +21,25 @@ export default {
             
         }
     },
+    components:{
+        SelectComponent,
+    },
+    props:{
+        genreList:Array,
+    },
+    
     methods:{
         // input sent
         sendInputSaved(){
             this.$emit('getInputSaved', this.inputSaved);
+        },
+        sendChoise(choice){
+            this.$emit('passChoice', choice);
         }
+
+        
     },
+
 }
 </script>
 

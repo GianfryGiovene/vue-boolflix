@@ -16,6 +16,7 @@
                 :sendflag="flags"
                 :id="item.id"
                 :whatKindOfShow="'movie'"
+                :apiKey="apiKey"
                 />
             </div>
             <h2>Series</h2>
@@ -33,7 +34,7 @@
                 :sendflag="flags"
                 :id="item.id"
                 :whatKindOfShow="'tv'"
-
+                :apiKey="apiKey"
                 />
             </div>
         </div>
@@ -55,7 +56,8 @@ export default {
     },
     props:{
         sentMoviesList: Array,
-        sentSeriesList:Array
+        sentSeriesList: Array,
+        apiKey: String,
     },
 }
 </script>
