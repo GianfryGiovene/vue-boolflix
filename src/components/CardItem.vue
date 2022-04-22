@@ -5,13 +5,10 @@
             <img v-else src="@/assets/no-image-available.jpg" alt="">
         </div>
         <div v-else id="description">
+            <perfect-scrollbar>
             <div class="flex-wrap">
                 <h4>Titolo:</h4>
                 <span>{{title}}</span>
-            </div>
-            <div class="flex-wrap">
-                <h4>Titolo originale:</h4>
-                <span>{{span}}</span>
             </div>
             <div class="flex-wrap">
                 <h4>Titolo originale:</h4>
@@ -23,7 +20,7 @@
                 <span v-else>{{ span2 }}</span>
             </div>
             <div class="score-stars flex-wrap">
-                <span>Voto:</span>
+                <h4>Voto:</h4>
                 <font-awesome-icon icon="fa-solid fa-star" :key="index" v-for="(item,index) in modifiedScore"></font-awesome-icon>
             </div>
             <div id="overview">
@@ -31,12 +28,25 @@
                 <perfect-scrollbar>
                     <p>{{ paragraph }}</p>
                 </perfect-scrollbar>
-            </div>    
+            </div>
+            <div id="cast">
+                <h4>Cast</h4>
+                <span :key="index" v-for="(member,index) in cast">{{member.name + ',  '}}</span>
+                <span v-if="cast != 0">and others</span>
+                <span v-else>Vedi il film e scoprilo</span>
+            </div>
+            <div id="genre">
+                <h4>Genre</h4>
+                <span :key="index" v-for="(genre,index) in genres">{{genre.name}}</span>
+                
+            </div>
+            </perfect-scrollbar>
         </div>       
     </div>
 </template>
 
 <script>
+import axios from 'axios';
 import CountryFlag from 'vue-country-flag';
 export default {
     name: 'CardItem',
@@ -47,6 +57,9 @@ export default {
         return{
             modifiedScore: 0,
             cardOver: false,
+            actorsApi: 'https://api.themoviedb.org/3/movie/',
+            cast:[],
+            genres:[]
         }
     },
     props: {
@@ -58,10 +71,12 @@ export default {
         span:  String,   
         span2: String,
         score: Number,
+        id: Number,
+        whatKindOfShow: String
     },
     created(){
         // converts the float numbers from 0 to 10 in a int from 0 to 5
-        this.modifiedScore = Math.ceil(this.score / 2)
+        this.modifiedScore = Math.ceil(this.score / 2);
     },
     methods:{
         //card over controls 
@@ -70,8 +85,22 @@ export default {
         },
         isLeave(){
             this.cardOver= false;
-        }
+        },
+        axiosRequestForActors(){
+            axios.get(`https://api.themoviedb.org/3/${this.whatKindOfShow}/${this.id}?api_key=941815c5e331ca168a23b432e7f83189&append_to_response=credits`).then(response=>{
+                console.log('lo vedo?',response.data.genres)
+                this.cast = response.data.credits.cast.slice(0,5);
+                this.genres = response.data.genres;
+                console.log('genreee',this.genres)
+            }).catch(error=>console.log('error',error))
+        },
+        
+    },
+    mounted(){
+        this.axiosRequestForActors()
     }
+    
+    
 }
 </script>
 
@@ -102,8 +131,12 @@ export default {
             background-color: #000;
             height: 100%;
             overflow-y: hidden;
+            & > .ps {
+                    height: 100%;
+                }
             h4{
             font-size: $small-font;
+            color: $font-color-primary;
             }
             span{
                 font-size: $small-font;
@@ -111,7 +144,7 @@ export default {
             .flex-wrap{
                 display: flex;
             }
-            .star{
+            .score-stars {
                 color: $yellow;
             }
             #overview{
@@ -125,6 +158,7 @@ export default {
         }
     } 
 </style>
+
 
 
 

@@ -42,14 +42,12 @@ export default {
         if(response.status === 200){
           this.searching = false;
           this.movies = response.data.results;
-          console.log('questo movies',this.movies);
         }
       });
       this.queryAPI('tv').then(response=>{
         if(response.status === 200){
           this.searching = false;
           this.series = response.data.results;
-          console.log('questo serie',response.data);
         }
       })
     },

@@ -4,8 +4,8 @@
             <h2>Movies</h2>
             <div>
                 <CardItem 
-                :key="index" 
-                v-for="(item,index) in sentMoviesList"
+                :key="item.id" 
+                v-for="item in sentMoviesList"
                 :title="item.title"
                 :imageUrl="item.poster_path"
                 :span="item.original_title"
@@ -15,13 +15,14 @@
                 :baseURL="'https://image.tmdb.org/t/p/'"
                 :sendflag="flags"
                 :id="item.id"
+                :whatKindOfShow="'movie'"
                 />
             </div>
             <h2>Series</h2>
             <div>
                 <CardItem 
-                :key="index" 
-                v-for="(item, index) in sentSeriesList"
+                :key="item.id" 
+                v-for="item in sentSeriesList"
                 :title="item.name"
                 :imageUrl="item.poster_path"
                 :span="item.original_name"
@@ -31,6 +32,8 @@
                 :baseURL="'https://image.tmdb.org/t/p/'"
                 :sendflag="flags"
                 :id="item.id"
+                :whatKindOfShow="'tv'"
+
                 />
             </div>
         </div>
@@ -76,6 +79,7 @@ export default {
             & > div{
                 padding: 0 50px;
                 align-items: center;
+                flex-shrink: 0;
                 display: flex;
                 gap: 20px;
                 overflow-x: auto;
