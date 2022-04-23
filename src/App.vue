@@ -6,8 +6,8 @@
       :genreList="genres"
     />
     <MainComponent  
-      :sentMoviesList="movies" 
-      :sentSeriesList="series" 
+      :sentMoviesList="filterMoviesByGenre" 
+      :sentSeriesList="filterSeriesByGenre" 
       :apiKey="apiKey" 
     />
   </div>
@@ -44,12 +44,21 @@ export default {
   },
   computed:{
     // DA COMPLETAREEE 
-    // filterMoviesByGenre(){
-    //   const filteredMovieByGenre = this.movies
-    //   if(this.selectedChoice !==''){
-    //     filteredMovieByGenre = filteredMovieByGenre.filter(({title})=>)
-    //   }
-    // }
+    filterMoviesByGenre(){
+      let filteredMovieByGenre = this.movies
+      if(this.selectedChoice !== ''){
+        filteredMovieByGenre = filteredMovieByGenre.filter(({genre_ids})=> genre_ids.includes(this.selectedChoice));
+        console.log(filteredMovieByGenre, 'cosa sto filtrando?', this.selectedChoice)
+      }
+      return filteredMovieByGenre;
+    },
+    filterSeriesByGenre(){
+      let filteredSeriesByGenre = this.series
+      if(this.selectedChoice !== ''){
+        filteredSeriesByGenre = filteredSeriesByGenre.filter(({genre_ids})=> genre_ids.includes(this.selectedChoice));
+      }
+      return filteredSeriesByGenre;
+    }
   },
   methods:{
     // function that has $emit as parameter  received from the header
@@ -68,6 +77,7 @@ export default {
         if(response.status === 200){
           this.searching = false;
           this.movies = response.data.results;
+          console.log(this.movies, 'vediamo array di film')
         }
       });
       this.queryAPI('tv').then(response=>{
@@ -90,22 +100,18 @@ export default {
             console.log('error',error)
             })
     },
-
     // prova passaggio array genere
         askForGenres(){
-            
             this.queryApiForSelect('movie').then(response=>{
-                this.moviesGenres = response.data.genres.map(item => item.name);
-                
+                console.log(response, 'qui vediamo di capire il filtr genere')
+                this.moviesGenres = response.data.genres;
                 console.log('genre movie',this.moviesGenres);
             })
             this.queryApiForSelect('tv').then(response=>{
-                this.seriesGenres = response.data.genres.map(item => item.name);
+                this.seriesGenres = response.data.genres;
                 this.noDuplicateGenre()
-            console.log('genre serie',this.seriesGenres);
+                console.log('genre serie',this.seriesGenres);
             })
-
-            
         },
 
         queryApiForSelect(kindOfApi){
@@ -114,17 +120,15 @@ export default {
         },
 
         noDuplicateGenre(){
-            
-            const  genresDuplicate = [...this.moviesGenres, ...this.seriesGenres];
-            this.genres = [...new Set(genresDuplicate)];
-            
+            const  genreDuplicate = [...this.moviesGenres, ...this.seriesGenres];
+            const ids = genreDuplicate.map(genre => genre.id);
+            this.genres = genreDuplicate.filter(({id},index)=> !ids.includes(id,index + 1))
         }
   },
+
   created(){
       this.askForGenres();
-      
   }
-
 }
 </script>
 

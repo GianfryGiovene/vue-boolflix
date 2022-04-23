@@ -95,6 +95,7 @@ export default {
                 console.log('lo vedo?',response.data.genres)
                 this.cast = response.data.credits.cast.slice(0,5);
                 this.genres = response.data.genres;
+                console.log('sono dentro la card', response)
             }).catch(error=>console.log('error',error))
         },
         

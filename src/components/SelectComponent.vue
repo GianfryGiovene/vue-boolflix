@@ -1,7 +1,7 @@
 <template>
     <select @change="sendChoise" v-model="optionChoises" name="">
-        <option value="">All</option>
-        <option :key="genre" v-for="genre in genreList" :value="genre">{{ genre }}</option>
+        <option value=''>All</option>
+        <option :key="genre.id" v-for="genre in genreList" :value="genre.id">{{ genre.name }}</option>
     </select>
 </template>
 
@@ -11,6 +11,7 @@ export default {
 
     data(){
         return{
+            // potrebbe essere un number
             optionChoises: '',
         }
     },
